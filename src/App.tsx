@@ -1,30 +1,22 @@
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
 import './App.css'
+import { Header } from './components/header'
+import { Outlet, Route, Routes } from 'react-router'
+import Home from './routes/Home'
+import Dados from './routes/Dados'
+import Facilidades from './routes/Facilidades'
 
 function App() {
 
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Dados SDAB
-      </h1>
-      <div className="card">
-        <a
-          className="card"
-          href="http://localhost:8080/api/v1/csv/lojas"
-          download="lojas.csv" ><button>
-          Download - CSV
-        </button></a>
-      </div>
-    </>
+    <div className="w-full h-full flex flex-col items-center justify-start bg-background text-foreground">
+      <Header/>
+      <Outlet/>
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/Dados" element={<Dados />} />
+        <Route path="/Facilidades" element={<Facilidades />} />
+      </Routes>
+    </div>
   )
 }
 
