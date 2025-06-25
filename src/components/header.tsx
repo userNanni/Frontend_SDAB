@@ -12,7 +12,7 @@ import { NavLink } from "react-router";
 
 export function Header() {
   return (
-    <Menubar className="bg-background border-b border-border p-6 rounded-full fixed top-6 z-50">
+    <Menubar className="bg-background border-b border-border p-6 rounded-full fixed top-6 z-50 drop-shadow-lg">
       <NavigationMenu>
         <NavigationMenuList>
           <NavigationMenuItem>

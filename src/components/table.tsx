@@ -13,7 +13,7 @@ import {
   useReactTable,
   VisibilityState,
 } from "@tanstack/react-table";
-import { ArrowUpDown, ChevronDown, Copy } from "lucide-react";
+import { ArrowUpDown, ChevronDown } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -33,6 +33,8 @@ import {
 } from "@/components/ui/table";
 import { UUID } from "crypto";
 import supabase from "@/lib/supabase";
+import CopyButton from "./copy-button";
+
 
 export type Facilidades_pregoeiro = {
   id: UUID;
@@ -141,7 +143,7 @@ export const columns: ColumnDef<Facilidades_pregoeiro>[] = [
     header: "Conteúdo",
     enableHiding: false,
     cell: ({ row }) => (
-      <div className="text-center font-medium break-words hyphens-auto max-w-md">
+      <div className="text-center font-medium break-words text-pretty hyphens-auto p-auto">
         {row.getValue("content")}
       </div>
     ),
@@ -151,25 +153,11 @@ export const columns: ColumnDef<Facilidades_pregoeiro>[] = [
     enableHiding: false,
     cell: ({ row }) => {
       const facilidade = row.original;
-
-      const handleCopy = async () => {
-        try {
-          await navigator.clipboard.writeText(facilidade.content);
-        } catch (err) {
-          console.error("Erro ao copiar:", err);
-        }
-      };
-
+      const content = facilidade.content
+      
       return (
-        <Button
-          variant="ghost"
-          className="h-8 w-8 p-0"
-          onClick={handleCopy}
-          title="Copiar conteúdo"
-        >
-          <Copy className="h-4 w-4" />
-        </Button>
-      );
+        <CopyButton content={content} />
+      )
     },
   },
 ];
@@ -181,6 +169,7 @@ interface FacilidadesTableProps {
 }
 
 export function FacilidadesTable({ OM, Date, Hour }: FacilidadesTableProps) {
+  
   const [sorting, setSorting] = useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
   const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({});
@@ -262,7 +251,7 @@ export function FacilidadesTable({ OM, Date, Hour }: FacilidadesTableProps) {
 
       <div className="rounded-md border overflow-hidden">
         <div className="overflow-x-auto">
-          <Table className="w-full table-fixed">
+          <Table className="w-full table">
             <TableHeader>
               {table.getHeaderGroups().map((headerGroup) => (
                 <TableRow key={headerGroup.id}>

@@ -12,14 +12,23 @@ import {
 } from "@/components/ui/collapsible";
 import { Button } from "@/components/ui/button";
 import React from "react";
+import OrientationWarning from "@/components/orientation-warning";
+import { useWindowSize } from "@uidotdev/usehooks";
+
 
 export default function Facilidades() {
+  const size = useWindowSize();
+  
   const [env, setEnv] = useState<EnvProps>({
     OM: "o IEFA",
     Hour: "09:00h",
     Date: "15/04 (terça-feira)",
   });
   const [isOpen, setIsOpen] = React.useState(false);
+
+  if (size.width != null && size.width < 500) {
+    return <OrientationWarning/>
+  }
 
   return (
     <div className="flex flex-col items-center justify-center w-full p-6 gap-8">
