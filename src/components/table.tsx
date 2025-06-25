@@ -44,13 +44,14 @@ export type Facilidades_pregoeiro = {
   content: string;
 };
 
-export type EnvProps = {
+export interface FacilidadesTableProps {
   OM: string;
-  Hour: string;
   Date: string;
-};
+  Hour: string;
+  Hour_limit: string;
+}
 
-function useFacilidadesData(OM: string, Date: string, Hour: string) {
+function useFacilidadesData(OM: string, Date: string, Hour: string, Hour_limit: string) {
   const [data, setData] = useState<Facilidades_pregoeiro[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -96,7 +97,8 @@ function useFacilidadesData(OM: string, Date: string, Hour: string) {
       content: item.content
         .replace("${OM}", OM)
         .replace("${date}", Date)
-        .replace("${hour}", Hour),
+        .replace("${hour}", Hour)
+        .replace("${hour_limit}", Hour_limit)
     }));
   }, [data, OM, Date, Hour]);
 
@@ -162,20 +164,14 @@ export const columns: ColumnDef<Facilidades_pregoeiro>[] = [
   },
 ];
 
-interface FacilidadesTableProps {
-  OM: string;
-  Date: string;
-  Hour: string;
-}
-
-export function FacilidadesTable({ OM, Date, Hour }: FacilidadesTableProps) {
+export function FacilidadesTable({ OM, Date, Hour, Hour_limit }: FacilidadesTableProps) {
   
   const [sorting, setSorting] = useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
   const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({});
   const [rowSelection, setRowSelection] = useState({});
 
-  const { data, loading, error } = useFacilidadesData(OM, Date, Hour);
+  const { data, loading, error } = useFacilidadesData(OM, Date, Hour, Hour_limit);
 
   const table = useReactTable({
     data,

@@ -1,7 +1,6 @@
-import { FacilidadesTable } from "@/components/table";
+import { FacilidadesTable, FacilidadesTableProps } from "@/components/table";
 import { Input } from "@/components/ui/input";
 import { useState } from "react";
-import { EnvProps } from "@/components/table";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Label } from "@/components/ui/label";
 import { ChevronsUpDown } from "lucide-react";
@@ -18,11 +17,12 @@ import { useWindowSize } from "@uidotdev/usehooks";
 
 export default function Facilidades() {
   const size = useWindowSize();
-  
-  const [env, setEnv] = useState<EnvProps>({
+
+  const [env, setEnv] = useState<FacilidadesTableProps>({
     OM: "o IEFA",
     Hour: "09:00h",
     Date: "15/04 (terça-feira)",
+    Hour_limit: "2 (duas)"
   });
   const [isOpen, setIsOpen] = React.useState(false);
 
@@ -92,11 +92,24 @@ export default function Facilidades() {
                 className="w-full"
               />
             </CardContent>
+            <CardContent className="flex flex-col items-start gap-2">
+              <Label className="px-2 bold">Tempo limite</Label>
+              <Input
+                placeholder="Insira a Hora"
+                type="text"
+                autoComplete="off"
+                autoCorrect="off"
+                spellCheck="false"
+                value={env.Hour_limit ?? "2 (duas)"}
+                onChange={(e) => setEnv({ ...env, Hour: e.target.value })}
+                className="w-full"
+              />
+            </CardContent>
           </CollapsibleContent>
         </Collapsible>
       </Card>
 
-      <FacilidadesTable OM={env.OM} Date={env.Date} Hour={env.Hour} />
+      <FacilidadesTable OM={env.OM} Date={env.Date} Hour={env.Hour} Hour_limit={env.Hour_limit} />
     </div>
   );
 }

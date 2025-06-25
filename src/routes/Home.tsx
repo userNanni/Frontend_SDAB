@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import { NavLink } from "react-router";
-import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 
 export default function Home() {
