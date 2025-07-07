@@ -32,6 +32,7 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import supabase from "@/lib/supabase";
+import DownloadButton from "./download-button";
 
 export interface Tables {
   table_name: string;
@@ -85,6 +86,18 @@ export const columns: ColumnDef<Tables>[] = [
       <div className="capitalize break-words">{row.getValue("table_name")}</div>
     ),
   },
+  {
+      id: "actions",
+      enableHiding: false,
+      cell: ({ row }) => {
+        const table_name = row.original;
+        const content = table_name.table_name
+        
+        return (
+          <DownloadButton content={content} />
+        )
+      },
+    },
 ];
 
 export function AllTables() {
@@ -113,6 +126,8 @@ export function AllTables() {
       rowSelection,
     },
   });
+
+  console.log(table.getAllColumns())
 
   if (loading) {
     return (
